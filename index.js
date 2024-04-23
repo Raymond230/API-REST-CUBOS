@@ -80,5 +80,34 @@ app.patch('/instrutores/:idConsultado',(req,res)=>{
   res.json(instrutor)
 })
 
+app.put('/instrutores/:idConcultado',(req,res)=>{
+
+  const instrutor = listaDeIntrutores.find(
+    (instrutor) => instrutor.id === Number(req.params.idConsultado)
+  );
+
+  if(instrutor){
+    instrutor.nome = req.body.nome
+    instrutor.idade = req.body.idade
+    instrutor.formacao = req.body.formacao
+    res.json(instrutor)
+  }else{
+    const novoInstrutor = req.body
+    listaDeIntrutores.push(novoInstrutor)
+    res.json(novoInstrutor)
+  }
+})
+
+app.delete('/instrutores/:idConsultado',(req,res)=>{
+  const instrutor = listaDeIntrutores.find(
+    (instrutor) => instrutor.id === Number(req.params.idConsultado)
+  );
+  const indice = listaDeIntrutores.indexOf(instrutor)
+
+  listaDeIntrutores.slice(indice,1)
+
+  res.json(instrutor)
+})
+
 
 app.listen(8000);
